@@ -180,9 +180,62 @@ const revenue = [
   { month: 'Dec', revenue: 4800 },
 ];
 
+const books = [
+  {
+    id: "7e61b7d7-9bc1-41b8-bb28-2f4750c72449",
+    title: "Don Quijote de la Mancha",
+    author: "Miguel de Cervantes",
+    publication_year: 1605,
+    genre: "Novela"
+  },
+  {
+    id: "1b9d6bcd-bbfd-4b2d-9b5d-ab8dfbbd4bed",
+    title: "Cien años de soledad",
+    author: "Gabriel García Márquez",
+    publication_year: 1967,
+    genre: "Realismo mágico"
+  },
+  {
+    id: "6ecd8c99-4036-403d-bf84-cf8400f67836",
+    title: "1984",
+    author: "George Orwell",
+    publication_year: 1949,
+    genre: "Distopía"
+  },
+  {
+    id: "a1b2c3d4-e5f6-7a8b-9c0d-1e2f3a4b5c6d",
+    title: "Moby Dick",
+    author: "Herman Melville",
+    publication_year: 1851,
+    genre: "Aventura"
+  },
+  {
+    id: "b2c3d4e5-f6a7-8b9c-0d1e-2f3a4b5c6d7e",
+    title: "Orgullo y prejuicio",
+    author: "Jane Austen",
+    publication_year: 1813,
+    genre: "Novela romántica"
+  },
+  {
+    id: "c3d4e5f6-a7b8-9c0d-1e2f-3a4b5c6d7e8f",
+    title: "Crimen y castigo",
+    author: "Fyodor Dostoevsky",
+    publication_year: 1866,
+    genre: "Novela psicológica"
+  },
+  {
+    id: "d4e5f6a7-b8c9-0d1e-2f3a-4b5c6d7e8f9e",
+    title: "En busca del tiempo perdido",
+    author: "Marcel Proust",
+    publication_year: 1913,
+    genre: "Novela modernista"
+  }
+]
+
 module.exports = {
   users,
   customers,
   invoices,
   revenue,
+  books,
 };

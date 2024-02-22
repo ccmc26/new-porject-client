@@ -31,6 +31,14 @@ export type Revenue = {
   revenue: number;
 };
 
+export type Books = {
+  id: string;
+  title: string;
+  author: string;
+  publication_year: number;
+  genre: string;
+}
+
 export type LatestInvoice = {
   id: string;
   name: string;
@@ -86,3 +94,4 @@ export type InvoiceForm = {
   amount: number;
   status: 'pending' | 'paid';
 };
+
