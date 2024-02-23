@@ -209,6 +209,32 @@ export async function fetchInvoiceById(id: string) {
   }
 }
 
+export async function fetchBookById(id: string) {
+  noStore();
+  try {
+    const data = await sql<Books>`
+      SELECT
+        books.id,
+        books.title,
+        books.author,
+        books.publication_year,
+        books.genre
+      FROM books
+      WHERE books.id = ${id};
+    `;
+
+    const book = data.rows.map((book) => ({
+      ...book,
+    }));
+
+    console.log(book);
+    return book[0];
+  } catch (error) {
+    console.error('Database Error:', error);
+    throw new Error('Failed to fetch book.');
+  }
+}
+
 export async function fetchCustomers() {
   noStore();
   try {
