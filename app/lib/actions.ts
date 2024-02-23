@@ -5,7 +5,7 @@ import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
 import { signIn } from '@/auth';
 import { AuthError } from 'next-auth';
-import { UpdateBook } from '../ui/books/buttons';
+// import { UpdateBook } from '../ui/books/buttons';
 
 const FormSchema = z.object({
     id: z.string(),
@@ -178,14 +178,14 @@ export async function authenticate(
   }
 
 
-export async function updateBook(
+export async function UpdateBook(
     id: string,
     prevState: State,
     formData: FormData,
 ) {
 
     const updateBook = FormSchemaBook.omit({ id: true });
-    const validatedFields = UpdateBook.safeParse({
+    const validatedFields = updateBook.safeParse({
         title: formData.get('title'),
         author: formData.get('author'),
         publication_year: formData.get('publication_year'),
@@ -199,20 +199,30 @@ export async function updateBook(
       };
     }
    
-    const { customerId, amount, status } = validatedFields.data;
-    const amountInCents = amount * 100;
+    const { title, author, publication_year, genre } = validatedFields.data;
+
    
     try {
       await sql`
-        UPDATE invoices
-        SET customer_id = ${customerId}, amount = ${amountInCents}, status = ${status}
+        UPDATE books
+        SET title = ${title}, author = ${author}, publication_year = ${publication_year}, genre = ${genre}
         WHERE id = ${id}
       `;
     } catch (error) {
-      return { message: 'Database Error: Failed to Update Invoice.' };
+      return { message: 'Database Error: Failed to Update Books.' };
     }
    
-    revalidatePath('/dashboard/invoices');
-    redirect('/dashboard/invoices');
+    revalidatePath('/dashboard/books');
+    redirect('/dashboard/books');
   }
+
+  export async function deleteBook(id: string) {
+    try {
+        await sql`DELETE FROM books WHERE id = ${id}`;
+        revalidatePath('/dashboard/books');
+        return { message: 'Deleted Book.' };
+    } catch (error) {
+        return { message: 'Database Error: Failed to Delete Book.' };
+    }
+}
 
