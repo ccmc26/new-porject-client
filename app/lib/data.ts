@@ -128,6 +128,38 @@ export async function fetchFilteredInvoices(
   }
 }
 
+export async function fetchFilteredBooks(
+  query: string,
+  currentPage: number,
+) {
+  noStore();
+  const offset = (currentPage - 1) * ITEMS_PER_PAGE;
+
+  try {
+    const books = await sql<Books>`
+      SELECT
+        books.id,
+        books.title,
+        books.author,
+        books.publication_year,
+        books.genre
+      FROM books
+      WHERE
+        books.title ILIKE ${`%${query}%`} OR
+        books.author ILIKE ${`%${query}%`} OR
+        books.publication_year::text ILIKE ${`%${query}%`} OR
+        books.genre ILIKE ${`%${query}%`}
+      ORDER BY books.publication_year DESC
+      LIMIT ${ITEMS_PER_PAGE} OFFSET ${offset}
+    `;
+
+    return books.rows;
+  } catch (error) {
+    console.error('Database Error:', error);
+    throw new Error('Failed to fetch books.');
+  }
+}
+
 export async function fetchInvoicesPages(query: string) {
   noStore();
   try {
