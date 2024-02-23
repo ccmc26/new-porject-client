@@ -55,6 +55,29 @@ export async function fetchLatestInvoices() {
   }
 }
 
+export async function fetchBooks() {
+  noStore();
+  try {
+    const data = await sql<Books>`
+      SELECT
+        id,
+        title,
+        author,
+        publication_year,
+        genre
+      FROM books
+      ORDER BY title ASC
+    `;
+
+    const books = data.rows;
+    return books;
+  } catch (err) {
+    console.error('Database Error:', err);
+    throw new Error('Failed to fetch all books.');
+  }
+}
+
+
 export async function fetchCardData() {
   noStore();
   try {

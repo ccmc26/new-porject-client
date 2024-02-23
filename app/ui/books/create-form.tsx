@@ -4,9 +4,15 @@ import Link from 'next/link';
 import { Button } from '@/app/ui/button';
 import { createBook } from '@/app/lib/actions';
 import { useFormState } from 'react-dom';
-// import { CreateBook } from './buttons';
+import { Books } from '@/app/lib/definitions';
 
-export default function Form() {
+interface BooksFormProps {
+  books: Books[];
+}
+
+export default function BooksForm({ books }: BooksFormProps) {
+  // Aquí va la lógica del formulario para crear los libros
+
   const initialState = { message: null, errors: {} };
   const [state, dispatch] = useFormState(createBook, initialState);
 

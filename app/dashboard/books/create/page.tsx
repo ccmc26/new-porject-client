@@ -1,14 +1,23 @@
-import Form from '@/app/ui/books/create-form';
+import { fetchBooks } from '@/app/lib/data';
+import BooksForm from '@/app/ui/books/create-form';
 import Breadcrumbs from '@/app/ui/invoices/breadcrumbs';
-// import { fetchCustomers } from '@/app/lib/data';
 
- 
 export default async function Page() {
-  // const customers = await fetchCustomers();
- 
+  const books = await fetchBooks();
+
   return (
     <main>
-      <Form></Form>
+      <Breadcrumbs
+        breadcrumbs={[
+          { label: 'Books', href: '/dashboard/books' },
+          {
+            label: 'Create Books',
+            href: '/dashboard/books/create',
+            active: true,
+          },
+        ]}
+      />
+      <BooksForm books={books} />
     </main>
   );
 }

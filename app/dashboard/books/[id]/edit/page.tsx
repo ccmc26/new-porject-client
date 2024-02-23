@@ -1,10 +1,11 @@
+import { fetchBookById } from '@/app/lib/data';
 import Form from '@/app/ui/books/edit-form';
-import Breadcrumbs from '@/app/ui/invoices/breadcrumbs';
+import Breadcrumbs from '@/app/ui/books/breadcrumbs';
 // import { fetchCustomers } from '@/app/lib/data';
  
 export default async function Page({ params }: { params: { id: string } }) {
     const id = params.id;
-    const [invoice, customers] = await Promise.all([
+    const [book] = await Promise.all([
         fetchBookById(id),
         // fetchCustomers(),
       ]);
@@ -20,7 +21,7 @@ export default async function Page({ params }: { params: { id: string } }) {
           },
         ]}
       />
-      <Form invoice={invoice} customers={customers} />
+      <Form book={book}/>
     </main>
   );
 }
