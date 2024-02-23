@@ -5,6 +5,7 @@ import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
 import { signIn } from '@/auth';
 import { AuthError } from 'next-auth';
+import { UpdateBook } from '../ui/books/buttons';
 
 const FormSchema = z.object({
     id: z.string(),
@@ -18,6 +19,14 @@ const FormSchema = z.object({
         invalid_type_error: 'Please select an invoice status.',
     }),
     date: z.string(),
+});
+
+const FormSchemaBook = z.object({
+    id: z.string(),
+    title: z.string(),
+    author: z.string(),
+    publication_year: z.number(),
+    genre: z.string(),
 });
 
 export type State = {
@@ -134,5 +143,76 @@ export async function authenticate(
       }
       throw error;
     }
+  }
+
+  const CreateBook = FormSchemaBook.omit({id: true});
+
+  export async function createBook(prevState: State, formData: FormData) {
+    const validatedFields = CreateBook.safeParse({
+        title: formData.get('title'),
+        author: formData.get('author'),
+        publication_year: formData.get('publication_year'),
+        genre: formData.get('genre'),
+    })
+
+    if(!validatedFields.success){
+        return {
+            // errors: validatedFields.error.flatten().fieldErrors,
+            message: 'Missing Fields. Failed to Create Books.',
+        };
+    }
+
+    const { title, author, publication_year, genre} = validatedFields.data;
+    try{
+        await sql`
+            INSERT INTO books (title,author,publication_year,genre)
+            VALUES($(title),$(author),$(publication_year),$(genre))
+        `;
+    }catch(error){
+        return {
+            message: 'Database Error: Failed to Create Book.',
+        };
+    }
+    revalidatePath('/dashboard/books');
+    redirect('/dashboard/books');
+  }
+
+
+export async function updateBook(
+    id: string,
+    prevState: State,
+    formData: FormData,
+) {
+
+    const updateBook = FormSchemaBook.omit({ id: true });
+    const validatedFields = UpdateBook.safeParse({
+        title: formData.get('title'),
+        author: formData.get('author'),
+        publication_year: formData.get('publication_year'),
+        genre: formData.get('genre'),
+    });
+   
+    if (!validatedFields.success) {
+      return {
+        errors: validatedFields.error.flatten().fieldErrors,
+        message: 'Missing Fields. Failed to Update Invoice.',
+      };
+    }
+   
+    const { customerId, amount, status } = validatedFields.data;
+    const amountInCents = amount * 100;
+   
+    try {
+      await sql`
+        UPDATE invoices
+        SET customer_id = ${customerId}, amount = ${amountInCents}, status = ${status}
+        WHERE id = ${id}
+      `;
+    } catch (error) {
+      return { message: 'Database Error: Failed to Update Invoice.' };
+    }
+   
+    revalidatePath('/dashboard/invoices');
+    redirect('/dashboard/invoices');
   }
 
