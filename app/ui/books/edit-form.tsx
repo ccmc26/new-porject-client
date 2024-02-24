@@ -21,7 +21,7 @@ export default function BookForm({ book }: BookFormProps) {
   return <form action={dispatch}>
         <div className="rounded-md bg-gray-50 p-4 md:p-6">
         <div className="mb-4">
-          <label htmlFor="amount" className="mb-2 block text-sm font-medium">
+          <label htmlFor="title" className="mb-2 block text-sm font-medium">
             Titulo libros
           </label>
           <div className="relative mt-2 rounded-md">
@@ -30,7 +30,8 @@ export default function BookForm({ book }: BookFormProps) {
                 id="title"
                 name="title"
                 type="string"
-                placeholder="Introduzca título"
+                placeholder=''
+                defaultValue={book.title}
                 className="peer block w-full rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
                 required
               />
@@ -39,7 +40,7 @@ export default function BookForm({ book }: BookFormProps) {
           </div>
         </div>
         <div className="mb-4">
-          <label htmlFor="amount" className="mb-2 block text-sm font-medium">
+          <label htmlFor="author" className="mb-2 block text-sm font-medium">
             Autor del libro
           </label>
           <div className="relative mt-2 rounded-md">
@@ -48,7 +49,8 @@ export default function BookForm({ book }: BookFormProps) {
                 id="author"
                 name="author"
                 type="string"
-                placeholder="Introduzca al autor"
+                placeholder=""
+                defaultValue={book.author}
                 className="peer block w-full rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
                 required
               />
@@ -57,7 +59,7 @@ export default function BookForm({ book }: BookFormProps) {
           </div>
         </div>
         <div className="mb-4">
-          <label htmlFor="amount" className="mb-2 block text-sm font-medium">
+          <label htmlFor="publication_year" className="mb-2 block text-sm font-medium">
             Fecha de publicación
           </label>
           <div className="relative mt-2 rounded-md">
@@ -66,7 +68,8 @@ export default function BookForm({ book }: BookFormProps) {
                 id="publication_year"
                 name="publication_year"
                 type="number"
-                placeholder="Introduzca año"
+                placeholder=""
+                defaultValue={book.publication_year}
                 className="peer block w-full rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
                 required
               />
@@ -74,7 +77,7 @@ export default function BookForm({ book }: BookFormProps) {
           </div>
         </div>
         <div className="mb-4">
-          <label htmlFor="amount" className="mb-2 block text-sm font-medium">
+          <label htmlFor="genre" className="mb-2 block text-sm font-medium">
             Genero
           </label>
           <div className="relative mt-2 rounded-md">
@@ -83,7 +86,8 @@ export default function BookForm({ book }: BookFormProps) {
                 id="genre"
                 name="genre"
                 type="genre"
-                placeholder="Indique el genero"
+                placeholder=""
+                defaultValue={book.genre}
                 className="peer block w-full rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
                 required
               />
@@ -101,7 +105,7 @@ export default function BookForm({ book }: BookFormProps) {
         >
           Cancel
         </Link>
-        <Button type="submit">Create Book</Button>
+        <Button type="submit">Edit Book</Button>
       </div>
     </form>
 }
