@@ -166,7 +166,7 @@ export async function authenticate(
     try{
         await sql`
             INSERT INTO books (title,author,publication_year,genre)
-            VALUES($(title),$(author),$(publication_year),$(genre))
+            VALUES(${title},${author},${publication_year},${genre})
         `;
     }catch(error){
         return {
